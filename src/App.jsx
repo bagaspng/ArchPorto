@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion'
 
 const projects = [
   {
@@ -87,6 +88,7 @@ function ProjectImage({ project, className = '', index = 0 }) {
   return (
     <div
       className={`project-image ${className} ${active ? 'is-active' : ''}`}
+      data-project-slug={project.slug}
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
     >
@@ -123,7 +125,7 @@ function Hero({ onOpenProject }) {
         <h1>Spaces with<br /><em>quiet presence.</em></h1>
         <p>We make places to live, work, and gather — shaped by light, material, and the life within.</p>
       </div>
-      <button className="hero-image-button" type="button" onClick={() => onOpenProject(heroProject.slug)} aria-label={`View ${heroProject.name}`}>
+      <button className="hero-image-button" type="button" data-project-slug={heroProject.slug} onClick={() => onOpenProject(heroProject.slug)} aria-label={`View ${heroProject.name}`}>
         <div className="hero-image-wrap reveal">
           <img src={heroProject.cover} alt="Rumah Kontur, Bandung" />
           <div className="hero-image-meta">
@@ -295,7 +297,7 @@ function ProjectDetail({ project, onClose, onOpenProject }) {
       <div className="detail-topline"><button type="button" onClick={onClose}><Arrow direction="left" /> All work</button><Label>Project {project.number} / 03</Label></div>
       <section className="detail-hero">
         <div className="detail-title reveal"><Label>{project.type}</Label><h1>{project.name}</h1><p>{project.location} / {project.year}</p></div>
-        <div className="detail-cover reveal"><img src={project.cover} alt={project.name} /><Annotation project={project} /></div>
+        <div className="detail-cover reveal" data-project-slug={project.slug}><img src={project.cover} alt={project.name} /><Annotation project={project} /></div>
       </section>
       <section className="spec-section section-pad-small">
         <div className="spec-intro"><Label>Project note</Label><p>{project.description}</p></div>
@@ -313,7 +315,7 @@ function ProjectDetail({ project, onClose, onOpenProject }) {
         <div className="gallery-story section-pad-small reveal-on-scroll"><Label>Inside the work</Label><p>{project.detail}</p><span className="story-mark">AR / {project.number}</span></div>
         <div className="gallery-pair reveal-on-scroll"><img src={project.images[1]} alt={`${project.name} interior`} /><img src={project.images[2]} alt={`${project.name} detail`} /></div>
       </section>
-      <button className="next-project" type="button" onClick={() => onOpenProject(nextProject.slug)}><div><Label>Next project / {nextProject.number}</Label><h2>{nextProject.name}</h2></div><Arrow /></button>
+      <button className="next-project" type="button" data-project-slug={nextProject.slug} onClick={() => onOpenProject(nextProject.slug)}><div><Label>Next project / {nextProject.number}</Label><h2>{nextProject.name}</h2></div><Arrow /></button>
     </main>
   )
 }
@@ -327,6 +329,189 @@ function useHashRoute() {
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
   return route
+}
+
+function GlobalSpringCursor() {
+  const mouseX = useMotionValue(-100)
+  const mouseY = useMotionValue(-100)
+
+  // Spring settings for ultra smooth movements
+  // mass: smaller = lighter/faster; stiffness: higher = stronger pull; damping: higher = less wobble
+  const springConfig = { mass: 0.06, stiffness: 350, damping: 22 }
+  const cursorX = useSpring(mouseX, springConfig)
+  const cursorY = useSpring(mouseY, springConfig)
+
+  const [hoverState, setHoverState] = useState('default') // 'default', 'project', 'interactive'
+  const [activeProject, setActiveProject] = useState(null)
+  
+  // Inactivity / idle state
+  const [isMoving, setIsMoving] = useState(false)
+  // Screen boundary / edge state
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    let moveTimeout
+
+    const handleMouseMove = (e) => {
+      mouseX.set(e.clientX)
+      mouseY.set(e.clientY)
+
+      // Screen edge boundary detection (24px padding)
+      const pad = 24
+      const nearEdge =
+        e.clientX <= pad ||
+        e.clientX >= window.innerWidth - pad ||
+        e.clientY <= pad ||
+        e.clientY >= window.innerHeight - pad
+
+      setIsVisible(!nearEdge)
+      setIsMoving(true)
+
+      // Inactivity timeout
+      clearTimeout(moveTimeout)
+      moveTimeout = setTimeout(() => {
+        setIsMoving(false)
+      }, 150) // Shrinks after 150ms of stillness
+    }
+
+    const handleMouseOver = (e) => {
+      const target = e.target
+      if (!target) return
+
+      const projectContainer = target.closest('[data-project-slug]')
+      const isInteractive = target.closest('a, button, input, textarea, [role="button"]')
+
+      if (projectContainer) {
+        const slug = projectContainer.getAttribute('data-project-slug')
+        const foundProject = projects.find((p) => p.slug === slug)
+        if (foundProject) {
+          setActiveProject(foundProject)
+          setHoverState('project')
+          return
+        }
+      }
+
+      if (isInteractive) {
+        setHoverState('interactive')
+        setActiveProject(null)
+      } else {
+        setHoverState('default')
+        setActiveProject(null)
+      }
+    }
+
+    const handleMouseLeave = () => {
+      setIsVisible(false)
+    }
+
+    const handleMouseEnter = () => {
+      setIsVisible(true)
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseover', handleMouseOver)
+    document.addEventListener('mouseleave', handleMouseLeave)
+    document.addEventListener('mouseenter', handleMouseEnter)
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseover', handleMouseOver)
+      document.removeEventListener('mouseleave', handleMouseLeave)
+      document.removeEventListener('mouseenter', handleMouseEnter)
+      clearTimeout(moveTimeout)
+    }
+  }, [mouseX, mouseY])
+
+  const [hasHover, setHasHover] = useState(false)
+  useEffect(() => {
+    setHasHover(window.matchMedia('(hover: hover) and (pointer: fine)').matches)
+  }, [])
+
+  if (!hasHover) return null
+
+  // Calculate styling dynamically
+  let width = 36
+  let height = 36
+  let backgroundColor = '#f97316' // Orange translucent
+  let borderColor = '#f97316'
+  let borderWidth = 1.5
+  let borderRadius = '50%'
+
+  if (hoverState === 'project') {
+    width = 160
+    height = 72
+    backgroundColor = 'rgba(249, 115, 22, 0.95)' // Semi-solid orange card
+    borderColor = 'rgba(255, 255, 255, 0.25)'
+    borderWidth = 1
+    borderRadius = '8px'
+  } else if (hoverState === 'interactive') {
+    width = 48
+    height = 48
+    backgroundColor = '#f97316'
+    borderColor = '#f97316'
+    borderWidth = 2
+    borderRadius = '50%'
+  } else {
+    // default state
+    width = isMoving ? 36 : 18 // shrinks when still
+    height = isMoving ? 36 : 18
+    backgroundColor = '#f97316'
+    borderColor = '#f97316'
+    borderWidth = 1.5
+    borderRadius = '50%'
+  }
+
+  return (
+    <motion.div
+      style={{
+        left: cursorX,
+        top: cursorY,
+      }}
+      animate={{
+        translateX: hoverState === 'project' ? '12px' : '-50%',
+        translateY: hoverState === 'project' ? '12px' : '-50%',
+        width,
+        height,
+        backgroundColor,
+        borderColor,
+        borderWidth,
+        borderRadius,
+        opacity: isVisible ? 1 : 0, // fade out at edges or leave
+        scale: isVisible ? 1 : 0.8,
+      }}
+      transition={{
+        type: 'spring',
+        mass: 0.15,
+        stiffness: 140,
+        damping: 18,
+      }}
+      className="fixed pointer-events-none z-[9999] flex flex-col items-center justify-center text-[9px] font-mono tracking-widest uppercase overflow-hidden shadow-[0_0_20px_rgba(249,115,22,0.2)]"
+    >
+      <AnimatePresence mode="wait">
+        {hoverState === 'project' && activeProject && (
+          <motion.div
+            key={activeProject.slug}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.15 }}
+            className="flex flex-col items-start justify-center p-3 text-left w-full h-full text-white"
+          >
+            <div className="flex justify-between items-center w-full border-b border-white/20 pb-1 mb-1">
+              <span className="font-mono text-[8px] opacity-90 text-white font-bold">PRJ.{activeProject.number}</span>
+              <span className="font-mono text-[8px] opacity-75 text-white">{activeProject.year}</span>
+            </div>
+            <div className="font-serif text-[11px] font-normal tracking-normal normal-case truncate w-full text-white leading-tight">
+              {activeProject.name}
+            </div>
+            <div className="font-mono text-[7px] opacity-75 text-white mt-0.5">
+              {activeProject.location}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  )
 }
 
 export default function App() {
@@ -351,18 +536,6 @@ export default function App() {
   }, [route])
 
   useEffect(() => {
-    const cursor = document.querySelector('.cursor-dot')
-    if (!cursor || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined
-    const onPointerMove = (event) => {
-      cursor.style.left = `${event.clientX}px`
-      cursor.style.top = `${event.clientY}px`
-      cursor.classList.toggle('is-photo', Boolean(event.target.closest('.project-image, .hero-image-button, .detail-cover')))
-    }
-    window.addEventListener('pointermove', onPointerMove)
-    return () => window.removeEventListener('pointermove', onPointerMove)
-  }, [])
-
-  useEffect(() => {
     if (detailProject) window.scrollTo({ top: 0, behavior: 'instant' })
   }, [detailProject])
 
@@ -374,7 +547,7 @@ export default function App() {
 
   return (
     <>
-      <div className="cursor-dot" />
+      <GlobalSpringCursor />
       <SiteNav onNavigate={onNavigate} currentView={currentView} />
       {detailProject ? <ProjectDetail project={detailProject} onClose={onClose} onOpenProject={onOpenProject} /> : (
         <main>
