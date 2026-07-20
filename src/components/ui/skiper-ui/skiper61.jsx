@@ -33,14 +33,17 @@ const SimpleMouseFollow = () => {
       onPointerLeave={() => {
         opacity.set(0);
       }}
-      className="rounded-4xl bg-background mt-20 size-[500px] cursor-none overflow-hidden">
+      className="relative flex items-center justify-center rounded-4xl bg-black mt-20 size-[500px] cursor-none">
+      <h2 className="text-5xl font-black text-white pointer-events-none">HOVER ME</h2>
       <motion.div
         style={{
           x,
           y,
           opacity,
+          mixBlendMode: "difference",
+          backgroundColor: "white"
         }}
-        className="rounded-4xl size-5 bg-[#ccc]"></motion.div>
+        className="absolute left-[-10px] top-[-10px] z-50 rounded-full size-5 pointer-events-none"></motion.div>
     </div>
   );
 };
@@ -66,15 +69,18 @@ const SpringMouseFollow = () => {
         opacitySpring.set(0);
         scaleSpring.set(0);
       }}
-      className="rounded-4xl bg-background mt-20 size-[500px] overflow-hidden">
+      className="relative flex items-center justify-center rounded-4xl bg-black mt-20 size-[500px] cursor-none">
+      <h2 className="text-5xl font-black text-white pointer-events-none">HOVER ME</h2>
       <motion.div
         style={{
           x: xSpring,
           y: ySpring,
           opacity: opacitySpring,
           scale: scaleSpring,
+          mixBlendMode: "difference",
+          backgroundColor: "white"
         }}
-        className="rounded-4xl size-10 bg-orange-700"></motion.div>
+        className="absolute left-[-20px] top-[-20px] z-50 rounded-full size-10 pointer-events-none"></motion.div>
     </div>
   );
 };
