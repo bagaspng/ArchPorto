@@ -18,7 +18,7 @@ export const HERO_SLIDES = [
   {
     id: 2,
     image: frontsidewide,
-    title: "FORM\nFOLLOWS\nPURPOSE",
+    title: "FORM FOLLOWS\nPURPOSE",
     subtitle: "Spaces shaped by material, light, and context.",
     cta: "Explore the Studio",
     project: "The Karang House — Bali, 2023",
@@ -26,7 +26,7 @@ export const HERO_SLIDES = [
   {
     id: 3,
     image: backwide,
-    title: "PRECISION\nIN EVERY\nDETAIL",
+    title: "PRECISION IN\nEVERY DETAIL",
     subtitle: "Architecture as a considered act.",
     cta: "Start Your Project",
     project: "Pavilion Timur — Yogyakarta, 2024",
@@ -34,7 +34,7 @@ export const HERO_SLIDES = [
   {
     id: 4,
     image: sideup,
-    title: "WARMTH\nAND\nSTRUCTURE",
+    title: "WARMTH\nAND STRUCTURE",
     subtitle: "Timber, stone, and the art of dwelling.",
     cta: "View Selected Projects",
     project: "Villa Ubud — Bali, 2023",
