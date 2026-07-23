@@ -23,8 +23,8 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: var(--text-body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; overscroll-behavior: none; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: var(--text-body); line-height: 1.6; -webkit-font-smoothing: antialiased; overscroll-behavior-y: none; }
 button, a { color: inherit; font: inherit; }
 button { cursor: pointer; }
 a { text-decoration: none; }
