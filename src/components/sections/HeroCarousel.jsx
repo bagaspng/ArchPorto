@@ -1,33 +1,27 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { HERO_SLIDES, EASING } from "../../data/constants";
 
-const SLIDE_DURATION = 6000;
-const SLIDE_TRANSITION = 750;
+const SLIDE_DURATION = 5000; // Lebih lambat (10 detik)
 
 export function HeroCarousel({ onExploreClick }) {
   const [current, setCurrent] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [transitioning, setTransitioning] = useState(false);
 
   const touchStartX = useRef(0);
 
   // Parallax setup
   const { scrollY } = useScroll();
-  const yImage = useTransform(scrollY, [0, 1000], [0, 350]); // Image moves down slower
-  // Text, button, and progress bar drop downwards naturally proportional to scroll
-  const yPopDown = useTransform(scrollY, [0, 1000], [0, 500]); 
+  const yImage = useTransform(scrollY, [0, 1000], [0, 350]); 
+  
+  // Lapisan hitam yang semakin pekat saat di-scroll
+  const overlayOpacity = useTransform(scrollY, [0, 900], [0, 1]);
 
   const advance = useCallback((dir) => {
-    if (transitioning) return;
-    setTransitioning(true);
     setProgress(0);
-    setTimeout(() => {
-      setCurrent((c) => (c + dir + HERO_SLIDES.length) % HERO_SLIDES.length);
-      setTransitioning(false);
-    }, SLIDE_TRANSITION);
-  }, [transitioning]);
+    setCurrent((c) => (c + dir + HERO_SLIDES.length) % HERO_SLIDES.length);
+  }, []);
 
   useEffect(() => {
     const tick = 50;
@@ -54,7 +48,7 @@ export function HeroCarousel({ onExploreClick }) {
         if (Math.abs(dx) > 48) advance(dx < 0 ? 1 : -1);
       }}
     >
-      {/* Background Images with Parallax */}
+      {/* Background Images with Zoom Out Singkat */}
       <motion.div className="absolute inset-0 w-full h-full" style={{ y: yImage }}>
         {HERO_SLIDES.map((s, i) => (
           <div
@@ -62,8 +56,9 @@ export function HeroCarousel({ onExploreClick }) {
             className="absolute inset-0"
             aria-hidden={i !== current}
             style={{
-              opacity: i === current ? (transitioning ? 0 : 1) : 0,
-              transition: `opacity ${SLIDE_TRANSITION}ms ease-out`,
+              opacity: i === current ? 1 : 0,
+              zIndex: i === current ? 1 : 0,
+              transition: `opacity 500ms ease`,
             }}
           >
             <img
@@ -71,98 +66,106 @@ export function HeroCarousel({ onExploreClick }) {
               alt={s.project}
               className="w-full h-full object-cover"
               loading={i === 0 ? "eager" : "lazy"}
+              style={{
+                transform: i === current ? "scale(1)" : "scale(1.08)",
+                transition: "transform 1000ms cubic-bezier(0.2, 0.8, 0.2, 1)",
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/25 to-black/10" />
             <div className="absolute bottom-0 left-0 right-0 h-56 bg-gradient-to-t from-black/50 to-transparent" />
           </div>
         ))}
+
+        {/* Dark overlay fading in on scroll */}
+        <motion.div 
+          className="absolute inset-0 bg-black pointer-events-none"
+          style={{ opacity: overlayOpacity, zIndex: 10 }}
+        />
       </motion.div>
 
-      {/* Hero content with Parallax */}
+      {/* Hero content with Native CSS Fixed Parallax (Zero Jitter) */}
       <div 
-        className="absolute inset-0 flex flex-col justify-end max-w-[1440px] mx-auto px-6 md:px-16 pb-6 md:pb-16"
+        className="fixed inset-0 flex flex-col justify-end max-w-[1440px] mx-auto px-4 md:px-8 pb-4 md:pb-8 pointer-events-none z-20"
       >
         <div className="flex flex-col md:flex-row md:items-end justify-between w-full gap-10">
-          <div className="max-w-4xl flex flex-col items-start w-full relative">
+          <div className="max-w-4xl flex flex-col items-start w-full relative z-10">
             
-            {/* ELEMEN YANG BERGERAK KE BAWAH BERSAMAAN (POP OUT DOWN) */}
-            <motion.div style={{ y: yPopDown }} className="w-full flex flex-col items-start">
+            {/* ELEMEN YANG DIAM DI TEMPAT (TRUE NATIVE PARALLAX) */}
+            <motion.div className="w-full flex flex-col items-start pointer-events-auto">
               
-              {/* 1. BUTTON CTA (Kini ikut bergerak bersama teks) */}
               <button
                 onClick={onExploreClick}
-                className="inline-flex items-center gap-3 text-white text-[11px] uppercase tracking-[0.22em] font-semibold px-7 py-3.5 border border-white/55 hover:bg-white hover:text-[#111111] hover:border-white transition-all duration-300 mb-8"
-                style={{
-                  opacity: transitioning ? 0 : 1,
-                  transform: transitioning ? "translateY(10px)" : "translateY(0)",
-                  transition: `opacity 400ms ease`,
-                }}
+                className="inline-flex items-center gap-3 text-white text-[11px] uppercase tracking-[0.22em] font-semibold px-7 py-3.5 border border-white/55 hover:bg-white hover:text-[#111111] hover:border-white transition-all duration-300 mb-20"
               >
-                {slide.cta}
-                <ArrowRight size={13} />
-              </button>
+                  {slide.cta}
+                  <ArrowRight size={13} />
+                </button>
 
-              {/* 2. TEKS BESAR / JUDUL UTAMA */}
-              <h1
-                className="text-white font-black uppercase whitespace-pre-line leading-[0.88] mb-6"
-                style={{
-                  fontFamily: "Barlow, sans-serif",
-                  fontSize: "clamp(2.4rem, 6.5vw, 6.5rem)", /* Ubah clamp() ini untuk custom ukuran font responsif */
-                  letterSpacing: "-0.025em",
-                  opacity: transitioning ? 0 : 1,
-                  transform: transitioning ? "translateY(10px)" : "translateY(0)",
-                  transition: `opacity 450ms ease-out, transform 450ms ease-out`,
-                }}
-              >
-                {slide.title}
-              </h1>
+                {/* AnimatePresence for text zoom out effect */}
+                <div className="w-full relative h-[180px] md:h-[220px]">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={current}
+                      initial={{ opacity: 0, scale: 1.05 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      className="absolute inset-0 flex flex-col"
+                    >
+                      <h1
+                        className="text-white font-black uppercase whitespace-pre-line leading-[0.88] mb-6"
+                        style={{
+                          fontFamily: "Barlow, sans-serif",
+                          fontSize: "clamp(1.4rem, 4.5vw, 4.5rem)", 
+                          letterSpacing: "-0.025em",
+                        }}
+                      >
+                        {slide.title}
+                      </h1>
 
-              {/* 3. TEKS KECIL / ALAMAT */}
-              <div
-                className="flex flex-col gap-1"
-                style={{
-                  opacity: transitioning ? 0 : 1,
-                  transform: transitioning ? "translateY(8px)" : "translateY(0)",
-                  transition: `opacity 450ms ease-out 60ms, transform 450ms ease-out 60ms`,
-                }}
-              >
-                <p className="text-white/60 text-[10px] uppercase tracking-[0.35em] font-light">
-                  {slide.project}
-                </p>
-                <p className="text-white/75 text-base md:text-lg font-light max-w-sm">
-                  {slide.subtitle}
-                </p>
-              </div>
+                      <div className="flex flex-col gap-1">
+                        <p className="text-white/60 text-[10px] uppercase tracking-[0.35em] font-light">
+                          {slide.project}
+                        </p>
+                        <p className="text-white/75 text-base md:text-lg font-light max-w-sm">
+                          {slide.subtitle}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+              </motion.div>
+            </div>
+
+            {/* 4 Horizontal Progress Bars */}
+            <motion.div className="flex items-center gap-2 mb-2 shrink-0 z-20 pointer-events-auto">
+              {HERO_SLIDES.map((_, idx) => (
+                <div 
+                  key={idx} 
+                  onClick={() => {
+                    setCurrent(idx);
+                    setProgress(0);
+                  }}
+                  className="py-4 cursor-pointer group flex items-center justify-center" 
+                  aria-label={`Go to slide ${idx + 1}`}
+                >
+                  <div className="w-12 md:w-16 h-[3px] bg-white/20 relative overflow-hidden group-hover:bg-white/50 transition-colors rounded-full">
+                    {idx === current && (
+                      <div
+                        className="absolute left-0 top-0 h-full bg-white rounded-full"
+                        style={{ width: `${progress}%`, transition: "none" }}
+                      />
+                    )}
+                    {idx < current && (
+                      <div className="absolute left-0 top-0 h-full w-full bg-white rounded-full" />
+                    )}
+                  </div>
+                </div>
+              ))}
             </motion.div>
           </div>
-
-          {/* 4 Horizontal Progress Bars (POP OUT DOWN) */}
-          <motion.div className="flex items-center gap-2 mb-2 shrink-0" style={{ y: yPopDown }}>
-            {HERO_SLIDES.map((_, idx) => (
-              <div 
-                key={idx} 
-                onClick={() => {
-                  if (idx === current) return;
-                  setCurrent(idx);
-                  setProgress(0);
-                }}
-                className="w-12 md:w-16 h-[3px] bg-white/20 relative overflow-hidden cursor-pointer hover:bg-white/40 transition-colors"
-                aria-label={`Go to slide ${idx + 1}`}
-              >
-                {idx === current && (
-                  <div
-                    className="absolute left-0 top-0 h-full bg-white"
-                    style={{ width: `${progress}%`, transition: "none" }}
-                  />
-                )}
-                {idx < current && (
-                  <div className="absolute left-0 top-0 h-full w-full bg-white" />
-                )}
-              </div>
-            ))}
-          </motion.div>
         </div>
-      </div>
-    </section>
+      </section>
   );
 }
