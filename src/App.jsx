@@ -179,6 +179,8 @@ function GlobalSpringCursor() {
   );
 }
 
+import CurvedLoop from "./components/shared/CurvedLoop";
+
 export default function App() {
   const [scrollState, setScrollState] = useState("top"); // "top", "scrolling_hero", "past_hero"
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -223,15 +225,25 @@ export default function App() {
 
       <main>
         <HeroCarousel onExploreClick={scrollToProjects} />
-        <FeaturedIntro />
-        <ProjectMasonryGrid onExploreCanvas={() => setShowCanvas(true)} />
-        <AboutStudio />
-        <ContactSection />
+        
+        <div className="relative z-30 bg-[#F8F7F4]">
+          <FeaturedIntro />
+          <ProjectMasonryGrid onExploreCanvas={() => setShowCanvas(true)} />
+          
+          {/* Curved Marquee diletakkan di whitespace sebelum About */}
+          <div className="w-full flex items-center justify-center pt-4 pb-1">
+            <CurvedLoop />
+          </div>
+
+          <AboutStudio />
+          <ContactSection />
+        </div>
       </main>
 
       <Footer />
       <ScrollToTopButton show={showScrollTop} />
 
+      {/* Fullscreen Canvas Overlay */}
       {showCanvas && <InfiniteProjectCanvas onClose={() => setShowCanvas(false)} />}
     </div>
   );
