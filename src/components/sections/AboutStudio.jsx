@@ -3,7 +3,7 @@ import { WHATSAPP_URL } from "../../data/constants";
 
 export function AboutStudio() {
   return (
-    <section id="about" className="py-24 md:py-32 border-t border-[#111111]/8">
+    <section id="about" className="py-24 md:py-16 border-t border-[#111111]/8">
       <div className="px-6 md:px-16 lg:px-24 max-w-[1440px] mx-auto">
         <div className="flex items-center gap-6 mb-16 md:mb-20">
           <p className="text-[#FF6B00] text-[10px] uppercase tracking-[0.35em] font-semibold whitespace-nowrap">
@@ -41,7 +41,7 @@ export function AboutStudio() {
               className="text-[#111111] font-black uppercase text-sm tracking-[0.12em]"
               style={{ fontFamily: "Barlow, sans-serif" }}
             >
-              Adi Santoso
+              Agung Pangestu
             </p>
             <p className="text-[#111111]/45 text-[10px] uppercase tracking-[0.22em] mt-1">
               Principal Architect
