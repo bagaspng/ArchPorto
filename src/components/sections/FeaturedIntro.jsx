@@ -16,20 +16,20 @@ export function FeaturedIntro() {
               letterSpacing: "-0.022em",
             }}
           >
-            <DirectionHover title="Spaces shaped by " hoverColor="#FF6B00" />
-            <DirectionHover title="material, light, " hoverColor="#FF6B00" />
-            <DirectionHover title="and context." hoverColor="#FF6B00" />
+            <DirectionHover title="Ruang yang dibentuk oleh " hoverColor="#FF6B00" />
+            <DirectionHover title="material, cahaya, " hoverColor="#FF6B00" />
+            <DirectionHover title="dan konteks." hoverColor="#FF6B00" />
           </h2>
         </div>
 
         {/* Right Side: Vertically Stacked Info */}
         <div className="w-full md:w-1/4 flex flex-col gap-4 pb-1">
           <p className="text-[#FF6B00] text-[10px] uppercase tracking-[0.35em] font-semibold md:text-right">
-            01 — Selected Works
+            01 — Karya Terpilih
           </p>
           <div className="h-px bg-[#111111]/12 w-full" />
           <p className="text-[#111111]/35 text-[10px] uppercase tracking-[0.25em] font-light md:text-right">
-            {PROJECTS.length} Projects
+            {PROJECTS.length} Proyek
           </p>
         </div>
 

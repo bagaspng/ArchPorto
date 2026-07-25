@@ -3,10 +3,10 @@ import { WHATSAPP_URL } from "../../data/constants";
 
 export function ContactSection() {
   const contacts = [
-    { icon: MessageCircle, label: "WhatsApp", value: "Start a Conversation", href: WHATSAPP_URL, primary: true },
+    { icon: MessageCircle, label: "WhatsApp", value: "Mulai Percakapan", href: WHATSAPP_URL, primary: true },
     { icon: Camera, label: "Instagram", value: "@formastudio.id", href: "https://instagram.com/formastudio" },
     { icon: Mail, label: "Email", value: "hello@formastudio.id", href: "mailto:hello@formastudio.id" },
-    { icon: MapPin, label: "Studio", value: "Bandung, West Java, Indonesia", href: null },
+    { icon: MapPin, label: "Studio", value: "Bandung, Jawa Barat, Indonesia", href: null },
   ];
 
   return (
@@ -15,7 +15,7 @@ export function ContactSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-end">
           <div className="lg:col-span-6">
             <p className="text-[#FF6B00] text-[10px] uppercase tracking-[0.35em] font-semibold mb-8">
-              03 — Contact
+              03 — Kontak
             </p>
             <h2
               className="font-black uppercase leading-[0.88] text-[#F8F7F4]"
@@ -25,17 +25,17 @@ export function ContactSection() {
                 letterSpacing: "-0.025em",
               }}
             >
-              Let's build
+              Mari bangun
               <br />
-              something
+              sesuatu
               <br />
-              <span style={{ color: "#FF6B00" }}>together.</span>
+              <span style={{ color: "#FF6B00" }}>bersama.</span>
             </h2>
           </div>
 
           <div className="lg:col-span-5 lg:col-start-8 flex flex-col gap-9">
             <p className="text-[#F8F7F4]/55 text-sm font-light leading-relaxed max-w-sm">
-              We take on a select number of projects each year. If you have a project in mind, we would welcome the conversation.
+              Kami hanya menangani sejumlah proyek pilihan setiap tahunnya. Jika Anda merencanakan sebuah proyek, kami sangat menyambut diskusi dengan Anda.
             </p>
 
             <div className="flex flex-col">
@@ -73,7 +73,7 @@ export function ContactSection() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] font-semibold px-8 py-4 border border-[#FF6B00] text-[#FF6B00] hover:bg-[#FF6B00] hover:text-[#111111] transition-all duration-300 group w-fit focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
             >
-              Start Your Project
+              Mulai Proyek Anda
               <ArrowRight
                 size={12}
                 className="transition-transform duration-300 group-hover:translate-x-1"
