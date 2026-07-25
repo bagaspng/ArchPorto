@@ -35,7 +35,7 @@ export function Footer() {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="text-[#F8F7F4]/35 text-[11px] uppercase tracking-[0.16em] hover:text-[#FF6B00] transition-colors duration-200 focus:outline-none focus:text-[#FF6B00]"
           >
-            Back to Top ↑
+            Kembali ke Atas ↑
           </button>
         </div>
       </div>

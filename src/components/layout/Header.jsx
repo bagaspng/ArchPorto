@@ -41,14 +41,18 @@ export function Header({ scrollState, mobileMenuOpen, setMobileMenuOpen }) {
             className="flex items-center gap-10 pointer-events-auto"
             style={{ y: yNav }}
           >
-            {["Home", "Projects", "About"].map((item) => (
+            {[
+              { id: "home", label: "Beranda" },
+              { id: "projects", label: "Proyek" },
+              { id: "about", label: "Tentang" }
+            ].map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+                key={item.id}
+                href={`#${item.id}`}
                 className="text-[11px] uppercase tracking-[0.22em] font-semibold relative group"
                 style={{ color: "#ffffff" }}
               >
-                {item}
+                {item.label}
                 <span
                   className="absolute -bottom-1 left-0 h-px bg-[#FF6B00] transition-all duration-300"
                   style={{ width: 0 }}
@@ -92,7 +96,7 @@ export function Header({ scrollState, mobileMenuOpen, setMobileMenuOpen }) {
               }
             }}
           >
-            Start a Project
+            Mulai Proyek
           </motion.a>
         </nav>
 
