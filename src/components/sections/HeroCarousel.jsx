@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { HERO_SLIDES, EASING } from "../../data/constants";
 
 const SLIDE_DURATION = 5000; // Lebih lambat (10 detik)
@@ -11,13 +11,7 @@ export function HeroCarousel({ onExploreClick }) {
 
   const touchStartX = useRef(0);
 
-  // Parallax setup
-  const { scrollY } = useScroll();
-  const yImage = useTransform(scrollY, [0, 1000], [0, 350]); 
-  
-  // Lapisan hitam yang semakin pekat saat di-scroll
-  const overlayOpacity = useTransform(scrollY, [0, 900], [0, 1]);
-
+  // Parallax setup removed as per user request for fixed scroll interaction
   const advance = useCallback((dir) => {
     setProgress(0);
     setCurrent((c) => (c + dir + HERO_SLIDES.length) % HERO_SLIDES.length);
@@ -40,7 +34,7 @@ export function HeroCarousel({ onExploreClick }) {
   return (
     <section
       id="home"
-      className="relative w-full overflow-hidden bg-[#111111]"
+      className="sticky top-0 z-0 w-full overflow-hidden bg-[#111111]"
       style={{ height: "100dvh" }}
       onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
       onTouchEnd={(e) => {
@@ -49,7 +43,7 @@ export function HeroCarousel({ onExploreClick }) {
       }}
     >
       {/* Background Images with Zoom Out Singkat */}
-      <motion.div className="absolute inset-0 w-full h-full" style={{ y: yImage }}>
+      <motion.div className="absolute inset-0 w-full h-full">
         {HERO_SLIDES.map((s, i) => (
           <div
             key={s.id}
@@ -75,17 +69,11 @@ export function HeroCarousel({ onExploreClick }) {
             <div className="absolute bottom-0 left-0 right-0 h-56 bg-gradient-to-t from-black/50 to-transparent" />
           </div>
         ))}
-
-        {/* Dark overlay fading in on scroll */}
-        <motion.div 
-          className="absolute inset-0 bg-black pointer-events-none"
-          style={{ opacity: overlayOpacity, zIndex: 10 }}
-        />
       </motion.div>
 
-      {/* Hero content with Native CSS Fixed Parallax (Zero Jitter) */}
+      {/* Hero content with absolute positioning to stay within the sticky container */}
       <div 
-        className="fixed inset-0 flex flex-col justify-end max-w-[1440px] mx-auto px-4 md:px-8 pb-4 md:pb-8 pointer-events-none z-20"
+        className="absolute inset-0 flex flex-col justify-end max-w-[1440px] mx-auto px-4 md:px-8 pb-4 md:pb-8 pointer-events-none z-20"
       >
         <div className="flex flex-col md:flex-row md:items-end justify-between w-full gap-10">
           <div className="max-w-4xl flex flex-col items-start w-full relative z-10">
@@ -148,7 +136,7 @@ export function HeroCarousel({ onExploreClick }) {
                     setProgress(0);
                   }}
                   className="py-4 cursor-pointer group flex items-center justify-center" 
-                  aria-label={`Go to slide ${idx + 1}`}
+                  aria-label={`Menuju slide ${idx + 1}`}
                 >
                   <div className="w-12 md:w-16 h-[3px] bg-white/20 relative overflow-hidden group-hover:bg-white/50 transition-colors rounded-full">
                     {idx === current && (

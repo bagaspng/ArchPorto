@@ -158,7 +158,7 @@ export function InfiniteProjectCanvas({ onClose }) {
       {showHint && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="bg-[#111111]/80 text-white text-[10px] uppercase tracking-[0.3em] px-7 py-3.5 animate-pulse">
-            Drag to explore
+            Geser untuk menjelajahi
           </div>
         </div>
       )}
@@ -167,31 +167,31 @@ export function InfiniteProjectCanvas({ onClose }) {
       <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 md:px-10 py-4 bg-[#F8F7F4]/92 backdrop-blur-sm border-b border-[#111111]/8">
         <div>
           <p className="text-[#FF6B00] text-[9px] uppercase tracking-[0.32em] font-semibold leading-none mb-1">
-            Project Archive
+            Arsip Proyek
           </p>
           <p
             className="text-[#111111] font-black text-sm uppercase tracking-tight"
             style={{ fontFamily: "Barlow, sans-serif" }}
           >
-            {CANVAS_PROJECTS.length} Projects — 2020–2026
+            {CANVAS_PROJECTS.length} Proyek — 2020–2026
           </p>
         </div>
         <button
           onClick={onClose}
           className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] font-semibold text-[#111111] hover:text-[#FF6B00] transition-colors duration-200 focus:outline-none focus:text-[#FF6B00]"
-          aria-label="Close canvas"
+          aria-label="Tutup kanvas"
         >
           <X size={15} />
-          Close
+          Tutup
         </button>
       </div>
 
       {/* Zoom controls */}
       <div className="absolute bottom-8 right-6 md:right-10 flex flex-col gap-1.5">
         {[
-          { label: "Zoom in", icon: <Plus size={14} />, action: () => setZoom((z) => Math.min(z + 0.15, 2)) },
-          { label: "Zoom out", icon: <Minus size={14} />, action: () => setZoom((z) => Math.max(z - 0.15, 0.3)) },
-          { label: "Reset view", icon: <RotateCcw size={13} />, action: () => { setOffset({ x: -120, y: -80 }); setZoom(0.8); } },
+          { label: "Perbesar", icon: <Plus size={14} />, action: () => setZoom((z) => Math.min(z + 0.15, 2)) },
+          { label: "Perkecil", icon: <Minus size={14} />, action: () => setZoom((z) => Math.max(z - 0.15, 0.3)) },
+          { label: "Atur ulang tampilan", icon: <RotateCcw size={13} />, action: () => { setOffset({ x: -120, y: -80 }); setZoom(0.8); } },
         ].map(({ label, icon, action }) => (
           <button
             key={label}
