@@ -23,9 +23,9 @@ export function MobileMenu({ open, onClose }) {
       <div className="flex flex-col h-full px-8 pt-28 pb-12">
         <nav className="flex flex-col gap-2">
           {[
-            { label: "Home", href: "#home" },
-            { label: "Projects", href: "#projects" },
-            { label: "About", href: "#about" },
+            { label: "Beranda", href: "#home" },
+            { label: "Proyek", href: "#projects" },
+            { label: "Tentang", href: "#about" },
           ].map(({ label, href }, i) => (
             <a
               key={label}

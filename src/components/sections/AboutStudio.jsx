@@ -23,7 +23,7 @@ export function AboutStudio() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Architecture should create a meaningful relationship between material, light, people, and place.
+              Arsitektur harus menciptakan hubungan yang bermakna antara material, cahaya, manusia, dan tempat.
             </h2>
           </div>
 
@@ -32,7 +32,7 @@ export function AboutStudio() {
             <div className="aspect-[3/4] overflow-hidden bg-[#E8E6E0] mb-5">
               <img
                 src="https://images.unsplash.com/photo-1580399017842-9858b3b0e74b?w=600&h=800&fit=crop&auto=format"
-                alt="Principal architect in natural light"
+                alt="Arsitek utama dalam cahaya alami"
                 className="w-full h-full object-cover grayscale"
                 loading="lazy"
               />
@@ -44,22 +44,22 @@ export function AboutStudio() {
               Agung Pangestu
             </p>
             <p className="text-[#111111]/45 text-[10px] uppercase tracking-[0.22em] mt-1">
-              Principal Architect
+              Arsitek Utama
             </p>
           </div>
 
           {/* Details column */}
           <div className="lg:col-span-4 flex flex-col gap-10">
             <p className="text-[#111111]/65 text-sm leading-relaxed font-light">
-              Forma Studio is an independent architecture practice based in Bandung, Indonesia. We work across residential, cultural, and hospitality projects with a commitment to material honesty, spatial quality, and the particular conditions of each site.
+              Apedesign adalah biro arsitektur independen yang berbasis di Bandung, Indonesia. Kami mengerjakan proyek residensial, kultural, dan hospitalitas dengan komitmen pada kejujuran material, kualitas ruang, dan kondisi spesifik setiap lokasi.
             </p>
 
             <div className="grid grid-cols-2 gap-6">
               {[
-                { value: "12", label: "Years" },
-                { value: "48", label: "Projects" },
-                { value: "6", label: "Countries" },
-                { value: "3", label: "Awards" },
+                { value: "12", label: "Tahun" },
+                { value: "48", label: "Proyek" },
+                { value: "6", label: "Negara" },
+                { value: "3", label: "Penghargaan" },
               ].map(({ value, label }) => (
                 <div key={label}>
                   <p
@@ -77,16 +77,16 @@ export function AboutStudio() {
 
             <div>
               <p className="text-[#111111]/35 text-[9px] uppercase tracking-[0.35em] mb-4">
-                Services
+                Layanan
               </p>
               <div className="flex flex-col">
                 {[
-                  "Architectural Design",
-                  "Residential Design",
-                  "Interior Architecture",
-                  "Renovation",
-                  "Spatial Planning",
-                  "Design Consultation",
+                  "Desain Arsitektur",
+                  "Desain Residensial",
+                  "Arsitektur Interior",
+                  "Renovasi",
+                  "Perencanaan Ruang",
+                  "Konsultasi Desain",
                 ].map((service, i) => (
                   <div
                     key={service}
@@ -107,7 +107,7 @@ export function AboutStudio() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] font-semibold px-7 py-3.5 bg-[#111111] text-[#F8F7F4] hover:bg-[#FF6B00] transition-colors duration-300 w-fit focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
             >
-              Start Your Project
+              Mulai Proyek Anda
               <ArrowRight size={12} />
             </a>
           </div>
