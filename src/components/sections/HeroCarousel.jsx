@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HERO_SLIDES, EASING } from "../../data/constants";
+import { PROJECTS, EASING } from "../../data/constants";
 
 const SLIDE_DURATION = 5000; // Lebih lambat (10 detik)
 
@@ -12,10 +12,12 @@ export function HeroCarousel({ onExploreClick }) {
   const touchStartX = useRef(0);
 
   // Parallax setup removed as per user request for fixed scroll interaction
+  const heroSlides = PROJECTS.filter(p => p.heroConfig?.isHero);
+
   const advance = useCallback((dir) => {
     setProgress(0);
-    setCurrent((c) => (c + dir + HERO_SLIDES.length) % HERO_SLIDES.length);
-  }, []);
+    setCurrent((c) => (c + dir + heroSlides.length) % heroSlides.length);
+  }, [heroSlides.length]);
 
   useEffect(() => {
     const tick = 50;
@@ -29,7 +31,7 @@ export function HeroCarousel({ onExploreClick }) {
     };
   }, [current, advance]);
 
-  const slide = HERO_SLIDES[current];
+  const slide = heroSlides[current];
 
   return (
     <section
@@ -44,7 +46,7 @@ export function HeroCarousel({ onExploreClick }) {
     >
       {/* Background Images with Zoom Out Singkat */}
       <motion.div className="absolute inset-0 w-full h-full">
-        {HERO_SLIDES.map((s, i) => (
+        {heroSlides.map((s, i) => (
           <div
             key={s.id}
             className="absolute inset-0"
@@ -56,8 +58,8 @@ export function HeroCarousel({ onExploreClick }) {
             }}
           >
             <img
-              src={s.image}
-              alt={s.project}
+              src={s.heroConfig.heroImage}
+              alt={s.name}
               className="w-full h-full object-cover"
               loading={i === 0 ? "eager" : "lazy"}
               style={{
@@ -85,7 +87,7 @@ export function HeroCarousel({ onExploreClick }) {
                 onClick={onExploreClick}
                 className="inline-flex items-center gap-3 text-white text-[11px] uppercase tracking-[0.22em] font-semibold px-7 py-3.5 border border-white/55 hover:bg-white hover:text-[#111111] hover:border-white transition-all duration-300 mb-20"
               >
-                  {slide.cta}
+                  {slide.heroConfig.heroCta}
                   <ArrowRight size={13} />
                 </button>
 
@@ -108,15 +110,15 @@ export function HeroCarousel({ onExploreClick }) {
                           letterSpacing: "-0.025em",
                         }}
                       >
-                        {slide.title}
+                        {slide.heroConfig.heroHeadline}
                       </h1>
 
                       <div className="flex flex-col gap-1">
                         <p className="text-white/60 text-[10px] uppercase tracking-[0.35em] font-light">
-                          {slide.project}
+                          {slide.name} — {slide.location}, {slide.year}
                         </p>
                         <p className="text-white/75 text-base md:text-lg font-light max-w-sm">
-                          {slide.subtitle}
+                          {slide.heroConfig.heroSubtitle}
                         </p>
                       </div>
                     </motion.div>
@@ -128,7 +130,7 @@ export function HeroCarousel({ onExploreClick }) {
 
             {/* 4 Horizontal Progress Bars */}
             <motion.div className="flex items-center gap-2 mb-2 shrink-0 z-20 pointer-events-auto">
-              {HERO_SLIDES.map((_, idx) => (
+              {heroSlides.map((_, idx) => (
                 <div 
                   key={idx} 
                   onClick={() => {

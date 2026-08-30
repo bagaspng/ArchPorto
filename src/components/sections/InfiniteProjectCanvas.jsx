@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { X, Plus, Minus, RotateCcw } from "lucide-react";
-import { CANVAS_PROJECTS } from "../../data/constants";
+import { PROJECTS } from "../../data/constants";
 
 export function InfiniteProjectCanvas({ onClose }) {
   const [offset, setOffset] = useState({ x: -120, y: -80 });
@@ -8,6 +8,8 @@ export function InfiniteProjectCanvas({ onClose }) {
   const [isDragging, setIsDragging] = useState(false);
   const [showHint, setShowHint] = useState(true);
   const [hoveredId, setHoveredId] = useState(null);
+
+  const canvasProjects = PROJECTS.filter(p => p.featuredImage?.canvas);
 
   const dragRef = useRef({
     active: false,
@@ -99,17 +101,17 @@ export function InfiniteProjectCanvas({ onClose }) {
             willChange: "transform",
           }}
         >
-          {CANVAS_PROJECTS.map((item) => (
+          {canvasProjects.map((item) => (
             <div
               key={item.id}
               className="absolute group"
-              style={{ left: item.x, top: item.y, width: item.w, height: item.h }}
+              style={{ left: item.featuredImage.canvas.x, top: item.featuredImage.canvas.y, width: item.featuredImage.canvas.w, height: item.featuredImage.canvas.h }}
               onMouseEnter={() => setHoveredId(item.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
               <img
-                src={item.image}
-                alt={item.alt}
+                src={item.featuredImage.src}
+                alt={item.featuredImage.alt}
                 className="w-full h-full object-cover"
                 draggable={false}
                 loading="lazy"
@@ -173,7 +175,7 @@ export function InfiniteProjectCanvas({ onClose }) {
             className="text-[#111111] font-black text-sm uppercase tracking-tight"
             style={{ fontFamily: "Barlow, sans-serif" }}
           >
-            {CANVAS_PROJECTS.length} Proyek — 2020–2026
+            {canvasProjects.length} Proyek — 2020–2026
           </p>
         </div>
         <button
