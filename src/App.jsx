@@ -113,11 +113,11 @@ function GlobalSpringCursor() {
 
   if (hoverState === 'project') {
     width = 160;
-    height = 72;
+    height = 92;
     backgroundColor = 'rgba(249, 115, 22, 0.95)';
     borderColor = 'rgba(255, 255, 255, 0.25)';
-    borderWidth = 1;
-    borderRadius = '8px';
+    borderWidth = 0;
+    borderRadius = '0px';
   } else if (hoverState === 'interactive') {
     width = 48;
     height = 48;
@@ -150,7 +150,7 @@ function GlobalSpringCursor() {
         scale: isVisible ? 1 : 0.8,
       }}
       transition={{ type: 'spring', mass: 0.15, stiffness: 140, damping: 18 }}
-      className="fixed pointer-events-none z-[9999] flex flex-col items-center justify-center text-[9px] font-mono tracking-widest uppercase overflow-hidden shadow-[0_0_20px_rgba(249,115,22,0.2)]"
+      className="fixed pointer-events-none z-[9999] flex flex-col items-center justify-center text-[9px] tracking-widest uppercase overflow-hidden shadow-[0_0_20px_rgba(249,115,22,0.2)]"
     >
       <AnimatePresence mode="wait">
         {hoverState === 'project' && activeProject && (
@@ -163,13 +163,13 @@ function GlobalSpringCursor() {
             className="flex flex-col items-start justify-center p-3 text-left w-full h-full text-white"
           >
             <div className="flex justify-between items-center w-full border-b border-white/20 pb-1 mb-1">
-              <span className="font-mono text-[8px] opacity-90 text-white font-bold">{activeProject.category}</span>
-              <span className="font-mono text-[8px] opacity-75 text-white">{activeProject.year}</span>
+              <span className="text-[9px] opacity-90 text-white font-bold">{activeProject.category}</span>
+              <span className="text-[9px] opacity-75 text-white font-semibold">{activeProject.year}</span>
             </div>
-            <div className="font-serif text-[11px] font-normal tracking-normal normal-case truncate w-full text-white leading-tight">
+            <div className="text-[12px] font-bold tracking-normal normal-case truncate w-full text-white leading-tight">
               {activeProject.name}
             </div>
-            <div className="font-mono text-[7px] opacity-75 text-white mt-0.5">
+            <div className="text-[8.5px] opacity-75 text-white mt-0.5 normal-case tracking-wider">
               {activeProject.location}
             </div>
           </motion.div>
