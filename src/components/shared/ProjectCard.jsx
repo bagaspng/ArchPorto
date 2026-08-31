@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { EASING } from "../../data/constants";
+import { getImageUrl } from "../../utils/cdn";
 
 const ASPECT_CLASSES = {
   portrait: "aspect-[3/4]",
@@ -21,7 +22,7 @@ export function ProjectCard({ project }) {
     >
       <div className={ASPECT_CLASSES[project.aspectRatio]}>
         <img
-          src={project.image}
+          src={getImageUrl(project.image)}
           alt={project.alt}
           className="w-full h-full object-cover"
           style={{

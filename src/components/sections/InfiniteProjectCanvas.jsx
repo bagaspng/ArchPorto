@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { X, Plus, Minus, RotateCcw } from "lucide-react";
 import { PROJECTS } from "../../data/constants";
+import { getImageUrl } from "../../utils/cdn";
 
 export function InfiniteProjectCanvas({ onClose }) {
   const [offset, setOffset] = useState({ x: -120, y: -80 });
@@ -110,7 +111,7 @@ export function InfiniteProjectCanvas({ onClose }) {
               onMouseLeave={() => setHoveredId(null)}
             >
               <img
-                src={item.featuredImage.src}
+                src={getImageUrl(item.featuredImage.src)}
                 alt={item.featuredImage.alt}
                 className="w-full h-full object-cover"
                 draggable={false}
