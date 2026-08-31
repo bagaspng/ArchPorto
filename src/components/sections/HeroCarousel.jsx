@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PROJECTS, EASING } from "../../data/constants";
+import { getImageUrl } from "../../utils/cdn";
 
 const SLIDE_DURATION = 5000; // Lebih lambat (10 detik)
 
@@ -58,7 +59,7 @@ export function HeroCarousel({ onExploreClick }) {
             }}
           >
             <img
-              src={s.heroConfig.heroImage}
+              src={getImageUrl(s.heroConfig.heroImage)}
               alt={s.name}
               className="w-full h-full object-cover"
               loading={i === 0 ? "eager" : "lazy"}

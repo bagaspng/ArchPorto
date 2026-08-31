@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { WHATSAPP_URL } from "../../data/constants";
+import { getImageUrl } from "../../utils/cdn";
 
 export function AboutStudio() {
   return (
@@ -31,7 +32,7 @@ export function AboutStudio() {
           <div className="lg:col-span-3">
             <div className="aspect-[3/4] overflow-hidden bg-[#E8E6E0] mb-5">
               <img
-                src="https://images.unsplash.com/photo-1580399017842-9858b3b0e74b?w=600&h=800&fit=crop&auto=format"
+                src={getImageUrl("https://images.unsplash.com/photo-1580399017842-9858b3b0e74b?w=600&h=800&fit=crop&auto=format")}
                 alt="Arsitek utama dalam cahaya alami"
                 className="w-full h-full object-cover grayscale"
                 loading="lazy"
