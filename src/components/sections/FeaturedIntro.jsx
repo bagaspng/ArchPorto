@@ -12,13 +12,13 @@ export function FeaturedIntro() {
             className="font-light uppercase leading-[0.91] text-[#111111] flex flex-col items-start gap-[0.05em]"
             style={{
               fontFamily: "Barlow, sans-serif",
-              fontSize: "clamp(2.5rem, 5.5vw, 5.2rem)",
+              fontSize: "clamp(1.5rem, 4.5vw, 4.2rem)",
               letterSpacing: "-0.022em",
             }}
           >
-            <DirectionHover title="Ruang yang dibentuk oleh " hoverColor="#FF6B00" />
-            <DirectionHover title="material, cahaya, " hoverColor="#FF6B00" />
-            <DirectionHover title="dan konteks." hoverColor="#FF6B00" />
+            <DirectionHover title="EKSPLORASI RUANG MEMADUKAN" hoverColor="#FF6B00" />
+            <DirectionHover title="MATERIAL, FUNGSI, " hoverColor="#FF6B00" />
+            <DirectionHover title="DAN ESTETIKA." hoverColor="#FF6B00" />
           </h2>
         </div>
 

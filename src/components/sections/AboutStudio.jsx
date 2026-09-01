@@ -24,7 +24,7 @@ export function AboutStudio() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Arsitektur harus menciptakan hubungan yang bermakna antara material, cahaya, manusia, dan tempat.
+              Kami merancang setiap detail ruang untuk menghadirkan kenyamanan, kedekatan, dan harmoni bagi penghuninya.
             </h2>
           </div>
 
