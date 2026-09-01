@@ -14,7 +14,7 @@ export function ProjectMasonryGrid({ onExploreCanvas }) {
           onClick={onExploreCanvas}
           className="inline-flex items-center gap-4 text-[11px] uppercase tracking-[0.28em] font-semibold px-10 py-4 border border-[#FF6B00] text-[#111111] transition-all duration-300 group hover:bg-[#FF6B00] hover:text-white"
         >
-          Lihat Arsip Proyek
+          Album Proyek 
           <ArrowRight
             size={12}
             className="transition-transform duration-300 group-hover:translate-x-1"
