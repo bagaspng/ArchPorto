@@ -52,15 +52,14 @@ export function AboutStudio() {
           {/* Details column */}
           <div className="lg:col-span-4 flex flex-col gap-10">
             <p className="text-[#111111]/65 text-sm leading-relaxed font-light">
-              Apedesign adalah biro arsitektur independen yang berbasis di Bandung, Indonesia. Kami mengerjakan proyek residensial, kultural, dan hospitalitas dengan komitmen pada kejujuran material, kualitas ruang, dan kondisi spesifik setiap lokasi.
+              Apedesign adalah biro arsitektur independen yang berbasis di Metro, Lampung, Indonesia. Kami mengerjakan proyek residensial, kultural, dan hospitalitas dengan komitmen pada kejujuran material, kualitas ruang, dan kondisi spesifik setiap lokasi.
             </p>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-2">
               {[
-                { value: "12", label: "Tahun" },
-                { value: "48", label: "Proyek" },
-                { value: "6", label: "Negara" },
-                { value: "3", label: "Penghargaan" },
+                { value: "5", label: "Tahun Pengalaman" },
+                { value: "100+", label: "    Proyek" },
+  
               ].map(({ value, label }) => (
                 <div key={label}>
                   <p

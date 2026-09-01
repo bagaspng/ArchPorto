@@ -1,12 +1,30 @@
 import { ArrowRight, Camera, Mail, MessageCircle, MapPin } from "lucide-react";
 import { WHATSAPP_URL } from "../../data/constants";
 
+function TikTokIcon({ size = 13, color = "currentColor", className = "" }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+  );
+}
+
 export function ContactSection() {
   const contacts = [
     { icon: MessageCircle, label: "WhatsApp", value: "Mulai Percakapan", href: WHATSAPP_URL, primary: true },
-    { icon: Camera, label: "Instagram", value: "@formastudio.id", href: "https://instagram.com/formastudio" },
-    { icon: Mail, label: "Email", value: "hello@formastudio.id", href: "mailto:hello@formastudio.id" },
-    { icon: MapPin, label: "Studio", value: "Bandung, Jawa Barat, Indonesia", href: null },
+    { icon: Camera, label: "Instagram", value: "@apede_sign", href: "https://www.instagram.com/apede_sign/" },
+    { icon: TikTokIcon, label: "TikTok", value: "@ape.design", href: "https://www.tiktok.com/@ape.design" },
+    { icon: MapPin, label: "Studio", value: "Metro, Lampung, Indonesia", href: null },
   ];
 
   return (
@@ -27,7 +45,7 @@ export function ContactSection() {
             >
               Mari bangun
               <br />
-              sesuatu
+              hunian
               <br />
               <span style={{ color: "#FF6B00" }}>bersama.</span>
             </h2>
@@ -35,7 +53,7 @@ export function ContactSection() {
 
           <div className="lg:col-span-5 lg:col-start-8 flex flex-col gap-9">
             <p className="text-[#F8F7F4]/55 text-sm font-light leading-relaxed max-w-sm">
-              Kami hanya menangani sejumlah proyek pilihan setiap tahunnya. Jika Anda merencanakan sebuah proyek, kami sangat menyambut diskusi dengan Anda.
+              Kami menangani semua jenis kebutuhan desain interior dan eksterior. Jika Anda merencanakan sebuah proyek, kami sangat menyambut diskusi dengan Anda.
             </p>
 
             <div className="flex flex-col">
