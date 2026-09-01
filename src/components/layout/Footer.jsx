@@ -19,7 +19,7 @@ export function Footer() {
         <div className="flex items-center gap-6 flex-wrap">
           {[
             { label: "Instagram", href: "https://instagram.com/formastudio" },
-            { label: "Email", href: "mailto:hello@formastudio.id" },
+            { label: "TikTok", href: "https://tiktok.com/@ape.design" },
           ].map(({ label, href }) => (
             <a
               key={label}
