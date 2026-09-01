@@ -15,7 +15,7 @@ import { InfiniteProjectCanvas } from "./components/sections/InfiniteProjectCanv
 import { AboutStudio } from "./components/sections/AboutStudio";
 import { ContactSection } from "./components/sections/ContactSection";
 
-import { PROJECTS } from "./data/constants";
+import { PROJECTS, EXPLORER_PROJECTS } from "./data/constants";
 
 function GlobalSpringCursor() {
   const mouseX = useMotionValue(-100);
@@ -58,8 +58,19 @@ function GlobalSpringCursor() {
       const target = e.target;
       if (!target) return;
 
+      const explorerContainer = target.closest('[data-explorer-id]');
       const projectContainer = target.closest('[data-project-slug]');
       const isInteractive = target.closest('a, button, input, textarea, [role="button"]');
+
+      if (explorerContainer) {
+        const id = explorerContainer.getAttribute('data-explorer-id');
+        const foundExplorer = EXPLORER_PROJECTS.find((p) => p.id === id);
+        if (foundExplorer) {
+          setActiveProject(foundExplorer);
+          setHoverState('project');
+          return;
+        }
+      }
 
       if (projectContainer) {
         const slug = projectContainer.getAttribute('data-project-slug');

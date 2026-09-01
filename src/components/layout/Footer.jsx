@@ -13,7 +13,7 @@ export function Footer() {
             © {new Date().getFullYear()}
           </span>
           <span className="text-[#F8F7F4]/28 text-[11px] uppercase tracking-[0.14em]">
-            Bandung, Indonesia
+            Bandar Lampung, Indonesia
           </span>
         </div>
         <div className="flex items-center gap-6 flex-wrap">
