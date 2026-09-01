@@ -118,7 +118,7 @@ export function HeroCarousel({ onExploreClick }) {
                         <p className="text-white/60 text-[10px] uppercase tracking-[0.35em] font-light">
                           {slide.name} — {slide.location}, {slide.year}
                         </p>
-                        <p className="text-white/75 text-base md:text-lg font-light max-w-sm">
+                        <p className="text-white/75 text-base md:text-lg font-light max-w-2xl md:max-w-3xl">
                           {slide.heroConfig.heroSubtitle}
                         </p>
                       </div>
